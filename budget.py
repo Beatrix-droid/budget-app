@@ -13,14 +13,14 @@ class Category:
         self.deposit_descrpt = deposit_descrpt
         self.balance = 0 + deposit_amt
         if self.deposit_descrpt:
-            x = {"description": f"{self.deposit_descrpt}", "amount": f"{self.deposit_amt}"}
+            x = {"description": f"{self.deposit_descrpt}", "amount": f"{format(self.deposit_amt,'.2f')}"}
             self.ledger.append(x)
         if not self.deposit_descrpt:
-            x = {"description": " ", "amount": f"{self.deposit_amt}"}
+            x = {"description": " ", "amount": f"{format(self.deposit_amt, '.2f')}"}
             self.ledger.append(x)
 
     def get_balance(self):
-        return self.balance
+        return float(self.balance)
 
     def check_funds(self, amt):
         self.amt = amt
@@ -32,10 +32,10 @@ class Category:
         self.withdraw_amt = withdraw_amt
         self.withdraw_descrpt = withdraw_descrpt
         if self.withdraw_descrpt:
-            ledger_item = {"description": f"{self.withdraw_descrpt}", "amount": f"{(-1) * self.withdraw_amt}"}
+            ledger_item = {"description": f"{self.withdraw_descrpt}", "amount": f"{format((-1) * self.withdraw_amt,'.2f')}"}
 
         if not self.withdraw_descrpt:
-            ledger_item = {"description": " ", "amount": f"{(-1) * self.withdraw_amt}"}
+            ledger_item = {"description": " ", "amount": f"{format((-1) * self.withdraw_amt,'.2f')}"}
         if self.check_funds(self.withdraw_amt):
             self.balance = self.deposit_amt - self.withdraw_amt
             self.deposit_amt = self.balance
@@ -47,31 +47,31 @@ class Category:
         return self.item
 
     def transfer(self, transfer_amt, item2):
-        Category.item2 = item2
+        Category.item = item2
         self.transfer_amt = transfer_amt
         if transfer_amt < self.deposit_amt:
-            self.ledger.append({"description": f"Transfer to {Category.item2.ledger}", "amount": f"{(-1) * self.transfer_amt}"})
-            Category.item2.ledger.append({"description": f"Transfer from {self.item}", "amount": f"{self.transfer_amt}"})
+            self.ledger.append({"description": f"Transfer to {item2.item}", "amount": f"{format((-1) * self.transfer_amt, '.2f')}"})
+            item2.ledger.append({"description": f"Transfer from {self.item}", "amount": f"{format(self.transfer_amt, '.2f')}"})
             self.balance = self.deposit_amt - self.transfer_amt
-     #       Category.item2.balance = item2.balance + self.transfer_amt
+            #item2.balance = item2.balance + self.transfer_amt
             return True
         return False
 
     def __str__(self):
-            stars = f'{(int(30 - len(self.item) / 2) * "*")}"{self.item} {int(30 - len(self.item) / 2) * "*"} \n'
-            ledger_items = ""
-            for dictionary in self.ledger:
-                for key in dictionary.keys():
-                    numbers = dictionary[key]
-                for value in dictionary.values():
-                    words = dictionary["description"]
-                    cut_words = str(words[0:23])
+        stars = (self.item.center(30, "*"))
+        ledger_items = ""
+        for dictionary in self.ledger:
+            for key in dictionary.keys():
+                numbers = dictionary[key]
+            for value in dictionary.values():
+                words = dictionary["description"]
+                cut_words = (words[0:23])
 
-                ledger_items = ledger_items + cut_words + str(numbers) + "\n"
-            total = f"Total {self.get_balance()}"
+            ledger_items = ledger_items + f"{cut_words.ljust(len(stars))} {numbers.rjust(len(stars))}  \n"
+        total = f"Total: {format(self.get_balance(), '.2f')}"
 
 
-            return stars + str(ledger_items[:]) + total
+        return stars + "\n" + str(ledger_items[:]) + total
 
 
 
