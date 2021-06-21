@@ -21,10 +21,10 @@ class Category:
         self.deposit_descrpt = deposit_descrpt
         self.balance = 0 + deposit_amt
         if self.deposit_descrpt:
-            x = {"description": f"{self.deposit_descrpt}", "amount": f"{format(self.deposit_amt,'.2f')}"}
+            x = {"amount": self.deposit_amt, "description": f"{self.deposit_descrpt}"}
             self.ledger.append(x)
         if not self.deposit_descrpt:
-            x = {"description": " ", "amount": f"{format(self.deposit_amt, '.2f')}"}
+            x = {"amount": self.deposit_amt, "description": ''}
             self.ledger.append(x)
 
     def get_balance(self):
@@ -46,11 +46,11 @@ class Category:
         self.withdraw_amt = withdraw_amt
         self.withdraw_descrpt = withdraw_descrpt
         if self.withdraw_descrpt:
-            ledger_item = {"description": f"{self.withdraw_descrpt}", "amount": \
-            f"{format((-1) * self.withdraw_amt,'.2f')}"}
+            ledger_item = {"amount": (-1) * self.withdraw_amt, "description": \
+                f"{self.withdraw_descrpt}"}
 
         if not self.withdraw_descrpt:
-            ledger_item = {"description": " ", "amount": f"{format((-1) * self.withdraw_amt,'.2f')}"}
+            ledger_item = {"amount": (-1) * self.withdraw_amt, "description" : ''}
         if self.check_funds(self.withdraw_amt):
             self.balance = self.deposit_amt - self.withdraw_amt
             self.deposit_amt = self.balance
@@ -67,9 +67,9 @@ class Category:
         self.transfer_amt = transfer_amt
         if transfer_amt < self.deposit_amt:
             self.ledger.append({"description": f"Transfer to {item2.item}", "amount": \
-            f"{format((-1) * self.transfer_amt, '.2f')}"})
+            (-1) * self.transfer_amt})
             item2.ledger.append({"description": f"Transfer from {self.item}", "amount": \
-            f"{format(self.transfer_amt, '.2f')}"})
+          self.transfer_amt})
             self.balance = self.deposit_amt - self.transfer_amt
             item2.deposit_amt = self.transfer_amt
             item2.balance = item2.deposit_amt + self.transfer_amt
@@ -83,20 +83,21 @@ class Category:
         ledger_items = ""
         for dictionary in self.ledger:
             for key in dictionary.keys():
-                numbers = dictionary[key]
+                numbers = dictionary["amount"]
             for value in dictionary.values():
                 words = dictionary["description"]
                 cut_words = (words[0:23])
 
-            ledger_items = ledger_items + f"{cut_words} {numbers.rjust(len(stars) - len(cut_words) -1, ' ')}  \n"
+            ledger_items = ledger_items + f"{cut_words} {format(numbers, '.2f').rjust(len(stars) - len(cut_words) -1, ' ')}  \n"
         total = f"Total: {format(self.get_balance(), '.2f')}"
 
 
         return stars + "\n" + str(ledger_items[:]) + total
 
 
+def create_spend_chart(categories):
+  pass
 
-#code included in the main file by FCC:test code:
 food = Category("Food")
 food.deposit(1000, "initial deposit")
 food.withdraw(10.15, "groceries")
@@ -110,6 +111,14 @@ auto = Category("Auto")
 auto.deposit(1000, "initial deposit")
 auto.withdraw(15)
 
-
 print(food)
 print(clothing)
+
+print(create_spend_chart([food, clothing, auto]))
+
+# Run unit tests automatically
+#############################################################d
+#development of the spending chart
+
+def create_spend_chart(list_of_cats):
+    pass
