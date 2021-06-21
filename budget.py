@@ -96,7 +96,52 @@ class Category:
 
 
 def create_spend_chart(categories):
-  pass
+    """this function  sums up the withdrawals of all categories (100%) and then provides the
+    withdrawals of one category as a percentage of the 'total withdrawal', depicting this in
+    a bar chart."""
+
+    #compiling a list of the withdraws and summing this up to fidn the total number of withdrawals
+
+    withdrawals = []
+    total_for_category = 0
+    for cat in categories:
+        cat_spending = cat.withdraw_amt
+        withdrawals.append(cat_spending)
+    total_for_category = sum(withdrawals)
+
+
+    #displaying what each category withdraw is as a percentage with respect to the total withdraws
+
+    percentages = []
+    for number in withdrawals:
+        percentage = round((number / total_for_category) * 100)
+        percentages.append(percentage)
+
+    for percentage in percentages:
+        number_of_bars = round((percentage / 10), 0)
+        bar = int(number_of_bars) * "0"
+        print(bar)
+
+    #creating the spend chart
+    return f"""
+              100|              
+               90|               
+               80|              
+               70|              
+               60|              
+               50|              
+               40|              
+               30|              
+               20|              
+               10|              
+                0|           
+                  {3*(len(categories) + 2) * '-'}
+                                                    """
+
+
+
+
+
 
 food = Category("Food")
 food.deposit(1000, "initial deposit")
@@ -111,14 +156,9 @@ auto = Category("Auto")
 auto.deposit(1000, "initial deposit")
 auto.withdraw(15)
 
+# clothing.withdraw = 25.55, food.woithdraw = 10.15
+
 print(food)
 print(clothing)
 
 print(create_spend_chart([food, clothing, auto]))
-
-# Run unit tests automatically
-#############################################################d
-#development of the spending chart
-
-def create_spend_chart(list_of_cats):
-    pass
