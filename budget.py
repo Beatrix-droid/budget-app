@@ -90,9 +90,19 @@ class Category:
 
             ledger_items = ledger_items + f"{cut_words} {format(numbers, '.2f').rjust(len(stars) - len(cut_words) -1, ' ')}  \n"
         total = f"Total: {format(self.get_balance(), '.2f')}"
-
-
         return stars + "\n" + str(ledger_items[:]) + total
+
+    def total_category_withdrawals(self):
+        category_withdrawals = 0
+        for i in self.ledger:
+            if i["amount"] < 0:
+                category_withdrawals += i["amount"]
+        return category_withdrawals
+
+##########################################################################################################################################
+    #spemd chart implementation
+
+
 
 
 def create_spend_chart(categories):
@@ -100,43 +110,40 @@ def create_spend_chart(categories):
     withdrawals of one category as a percentage of the 'total withdrawal', depicting this in
     a bar chart."""
 
-    #compiling a list of the withdraws and summing this up to fidn the total number of withdrawals
-
-    withdrawals = []
-    total_for_category = 0
+    #collecting the data of category withdrwals in a list, and computing the sum of total withdrawals
+    cat = Category
+    category_withdrawals = []
+    total_withdrawals = 0
     for cat in categories:
-        cat_spending = cat.withdraw_amt
-        withdrawals.append(cat_spending)
-    total_for_category = sum(withdrawals)
+        total_spent_per_cat = cat.total_category_withdrawals()
+        category_withdrawals.append(total_spent_per_cat)
+    total_withdrawals = sum(category_withdrawals)
 
-
-    #displaying what each category withdraw is as a percentage with respect to the total withdraws
+    #initial implementation of percentanges
 
     percentages = []
-    for number in withdrawals:
-        percentage = round((number / total_for_category) * 100)
+    for number in category_withdrawals:
+        percentage = round((number / total_withdrawals) * 100)
         percentages.append(percentage)
 
+    #first attempts at creating the bars
     for percentage in percentages:
-        number_of_bars = round((percentage / 10), 0)
-        bar = int(number_of_bars) * "0"
-        print(bar)
+       number_of_bars = round((percentage / 10), 0)
+       bar = int(number_of_bars) * "0"
+       print(bar) #debug statemnt, not required for actual function
+
+    print(category_withdrawals)  # debug statemnt, not required for actual function
+    print(total_withdrawals)  # debug statemnt, not required for actual function
+    print(percentages)  # debug statemnt, not required for actual function
 
     #creating the spend chart
-    return f"""
-              100|              
-               90|               
-               80|              
-               70|              
-               60|              
-               50|              
-               40|              
-               30|              
-               20|              
-               10|              
-                0|           
-                  {3*(len(categories) + 2) * '-'}
-                                                    """
+    spend_chart = ""
+    title = " Percentage spent by category\n"
+    for i in reversed(range(0, 110, 10)):
+        thingy = f"{i}|"
+        spend_chart = spend_chart + f"{thingy.rjust(5)}  \n"
+
+    return title + spend_chart + f"    {3*(len(categories) + 2) * '-'}\n"
 
 
 
@@ -160,5 +167,4 @@ auto.withdraw(15)
 
 print(food)
 print(clothing)
-
 print(create_spend_chart([food, clothing, auto]))
