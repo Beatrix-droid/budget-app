@@ -4,14 +4,12 @@ they are passed in the name of the category. There is also an instance
 variable that is a list"""
 
 
-
 class Category:
 
     def __init__(self, item):
         self.item = item
         self.ledger = list()
         self.balance = 0
-
 
     def deposit(self, deposit_amt, deposit_descrpt=False):
 
@@ -103,8 +101,6 @@ class Category:
     #spemd chart implementation
 
 
-
-
 def create_spend_chart(categories):
     """this function  sums up the withdrawals of all categories (100%) and then provides the
     withdrawals of one category as a percentage of the 'total withdrawal', depicting this in
@@ -119,6 +115,36 @@ def create_spend_chart(categories):
         category_withdrawals.append(total_spent_per_cat)
     total_withdrawals = sum(category_withdrawals)
 
+    #COMPLETED:
+    #ensuring that all category titles have the same length
+    chart_titles = []
+    cat_dic = {}
+    for cat in categories:
+        cat_dic[str(cat.item)] = len(str(cat.item))
+        longest_word = max(cat_dic.values())
+    for key, value in cat_dic.items():
+        if value == longest_word:
+            cat_title = key
+            chart_titles.append(cat_title)
+
+        else:
+            value = longest_word - value
+            extra_spacing = str(value * ' ')
+            cat_title = key + extra_spacing
+            chart_titles.append(cat_title)
+    category_chart_names = ""
+
+    for word in chart_titles:
+      for j in range(len(chart_titles)):
+        for i in range(len(word)):
+            category_chart_names = category_chart_names + f"{chart_titles[j][i]}"
+        category_chart_names = category_chart_names + "\n"
+
+      break
+
+    #category_chart_names = category_chart_names.rjust(3)
+    #chart_titles[j][i].rjust(len(categories))} {chart_titles[2][i].rjust(len(categories))}
+
     #initial implementation of percentanges
 
     percentages = []
@@ -130,25 +156,19 @@ def create_spend_chart(categories):
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
        bar = int(number_of_bars) * "0"
-       print(bar) #debug statemnt, not required for actual function
-
-    print(category_withdrawals)  # debug statemnt, not required for actual function
-    print(total_withdrawals)  # debug statemnt, not required for actual function
-    print(percentages)  # debug statemnt, not required for actual function
+       #print(bar) #debug statemnt, not required for actual function
 
     #creating the spend chart
     spend_chart = ""
     title = " Percentage spent by category\n"
     for i in reversed(range(0, 110, 10)):
         thingy = f"{i}|"
-        spend_chart = spend_chart + f"{thingy.rjust(5)}  \n"
-
-    return title + spend_chart + f"    {3*(len(categories) + 2) * '-'}\n"
+        spend_chart = spend_chart + f"{thingy.rjust(3)}{3*len(categories) * ' '} \n "
 
 
+    return title + spend_chart + f"   {3*(len(categories) + 2) * '-'}\n {category_chart_names}"
 
-
-
+#center(30, "*")
 
 food = Category("Food")
 food.deposit(1000, "initial deposit")
