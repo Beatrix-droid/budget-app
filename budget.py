@@ -60,7 +60,7 @@ class Category:
         return self.item
 
     def transfer(self, transfer_amt, item2):
-        """ trasnsfers a desired amount of money from one category to another"""
+        """ transfers a desired amount of money from one category to another"""
         Category.item = item2
         self.transfer_amt = transfer_amt
         if transfer_amt < self.deposit_amt:
@@ -115,7 +115,6 @@ def create_spend_chart(categories):
         category_withdrawals.append(total_spent_per_cat)
     total_withdrawals = sum(category_withdrawals)
 
-    #COMPLETED:
     #ensuring that all category titles have the same length
     chart_titles = []
     cat_dic = {}
@@ -132,43 +131,51 @@ def create_spend_chart(categories):
             extra_spacing = str(value * ' ')
             cat_title = key + extra_spacing
             chart_titles.append(cat_title)
+
+    #implementing the correct formatting for the category titles
     category_chart_names = ""
-
     for word in chart_titles:
-      for j in range(len(chart_titles)):
         for i in range(len(word)):
-            category_chart_names = category_chart_names + f"{chart_titles[j][i]}"
-        category_chart_names = category_chart_names + "\n"
+            if range(len(chart_titles)) == range(0, 4):
+                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1 ][i]} {chart_titles[2][i]} {chart_titles[3][i]}".rjust(9)
+            elif range(len(chart_titles)) == range(0, 3):
+                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}".rjust(9)
+            elif range(len(chart_titles)) == range(0, 2):
+                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1][i]}".rjust(9)
+            elif range(len(chart_titles)) == range(0, 1):
+                category_chart_names = category_chart_names + f"{chart_titles[0][i]}".rjust(9)
+            elif len(chart_titles) > 4:
+                return "Sorry you cannot display data for more than four categories at a time"
 
-      break
+            category_chart_names = (category_chart_names + "\n")
+        break
 
-    #category_chart_names = category_chart_names.rjust(3)
-    #chart_titles[j][i].rjust(len(categories))} {chart_titles[2][i].rjust(len(categories))}
-
-    #initial implementation of percentanges
-
+    #gathering the percentage data
     percentages = []
     for number in category_withdrawals:
         percentage = round((number / total_withdrawals) * 100)
         percentages.append(percentage)
 
-    #first attempts at creating the bars
+    #first attempts at creating the bars, and matching the bar with its appropriate category
+    bars = []
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
        bar = int(number_of_bars) * "0"
-       #print(bar) #debug statemnt, not required for actual function
+       bars.append(bar)
+    mapping = zip(chart_titles, bars)
+    barchart_cat_name_mapping = dict(mapping)
+    print(barchart_cat_name_mapping)
 
-    #creating the spend chart
+    #creating the spend chart axis and title
     spend_chart = ""
     title = " Percentage spent by category\n"
     for i in reversed(range(0, 110, 10)):
         thingy = f"{i}|"
         spend_chart = spend_chart + f"{thingy.rjust(3)}{3*len(categories) * ' '} \n "
 
+    #putting everything together in the final return statement
+    return title + spend_chart + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names
 
-    return title + spend_chart + f"   {3*(len(categories) + 2) * '-'}\n {category_chart_names}"
-
-#center(30, "*")
 
 food = Category("Food")
 food.deposit(1000, "initial deposit")
@@ -182,8 +189,6 @@ clothing.withdraw(100)
 auto = Category("Auto")
 auto.deposit(1000, "initial deposit")
 auto.withdraw(15)
-
-# clothing.withdraw = 25.55, food.woithdraw = 10.15
 
 print(food)
 print(clothing)
