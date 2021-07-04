@@ -133,22 +133,21 @@ def create_spend_chart(categories):
             chart_titles.append(cat_title)
 
     #implementing the correct formatting for the category titles
-    category_chart_names = ""
+    category_chart_names = " "
     for word in chart_titles:
         for i in range(len(word)):
-            if range(len(chart_titles)) == range(0, 4):
-                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1 ][i]} {chart_titles[2][i]} {chart_titles[3][i]}".rjust(9)
-            elif range(len(chart_titles)) == range(0, 3):
-                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}".rjust(9)
-            elif range(len(chart_titles)) == range(0, 2):
-                category_chart_names = category_chart_names + f"{chart_titles[0][i]} {chart_titles[1][i]}".rjust(9)
-            elif range(len(chart_titles)) == range(0, 1):
-                category_chart_names = category_chart_names + f"{chart_titles[0][i]}".rjust(9)
-            elif len(chart_titles) > 4:
+            if len(chart_titles) == 4:
+                category_chart_names += (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(10)
+            elif len(chart_titles) == 3:
+                category_chart_names += (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(10)
+            elif len(chart_titles) == 2:
+                category_chart_names += f"{chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(10)
+            elif len(chart_titles) == 1:
+                category_chart_names += f"{chart_titles[0][i]}\n ".rjust(10)
+            else:
                 return "Sorry you cannot display data for more than four categories at a time"
-
-            category_chart_names = (category_chart_names + "\n")
         break
+    category_chart_names = (category_chart_names).rjust(9) +"\n"
 
     #gathering the percentage data
     percentages = []
@@ -156,7 +155,7 @@ def create_spend_chart(categories):
         percentage = round((number / total_withdrawals) * 100)
         percentages.append(percentage)
 
-    #first attempts at creating the bars, and matching the bar with its appropriate category
+    #creating bars: matching each bar with its appropriate category
     bars = []
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
@@ -166,15 +165,44 @@ def create_spend_chart(categories):
     barchart_cat_name_mapping = dict(mapping)
     print(barchart_cat_name_mapping)
 
-    #creating the spend chart axis and title
+    # formatting the bar to ensure that all the bars have the same length
+    bar_dic = {}
+    equal_length_bars = []
+    for bar in bars:
+        bar_dic[bar] = len(str(bar))
+        longest_bar = max(bar_dic.values())
+    for key, value in bar_dic.items():
+        if value == longest_bar:
+            bar_ = key
+            equal_length_bars.append(bar_)
+        else:
+            value = longest_bar - value
+            extra_spacing = str(value * ' ')
+            bar_ = key + extra_spacing
+            equal_length_bars.append(bar_)
+    print(equal_length_bars)
+
+
+
+    #first steps top the creation of the bars
+    bark = ""
+    for key in barchart_cat_name_mapping:
+        for dot in range(len(barchart_cat_name_mapping[key])):
+            bark = bark + "0\n"
+        bark = bark + "\n"
+
+        if len(chart_titles) == 4:
+            bark += f"{ barchart_cat_name_mapping.keys()[0][dot]} { barchart_cat_name_mapping[1][dot]} { barchart_cat_name_mapping[2][dot]} { barchart_cat_name_mapping[3][dot]}\n ".rjust(10)
+
+    # creating the spend chart axis and title
     spend_chart = ""
     title = " Percentage spent by category\n"
     for i in reversed(range(0, 110, 10)):
         thingy = f"{i}|"
-        spend_chart = spend_chart + f"{thingy.rjust(3)}{3*len(categories) * ' '} \n "
+        spend_chart = spend_chart + f"{thingy.rjust(3)}{3 * len(categories) * ' '} \n "
 
     #putting everything together in the final return statement
-    return title + spend_chart + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names
+    return title + spend_chart + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
 
 
 food = Category("Food")
