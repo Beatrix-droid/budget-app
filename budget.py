@@ -183,16 +183,24 @@ def create_spend_chart(categories):
     print(equal_length_bars)
 
 
-
     #first steps top the creation of the bars
     bark = ""
-    for key in barchart_cat_name_mapping:
-        for dot in range(len(barchart_cat_name_mapping[key])):
-            bark = bark + "0\n"
-        bark = bark + "\n"
+    for dot in equal_length_bars:
+        for i in range(len(dot)):
+            if len(equal_length_bars) == 4:
+                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
+            elif len(equal_length_bars) == 3:
+                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} \n ").rjust(10)
+            elif len(equal_length_bars) == 2:
+                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} \n ").rjust(10)
+            elif len(equal_length_bars) == 1:
+                bark += (f"{equal_length_bars[0][i]}\n ").rjust(10)
+        break
+    bark = (bark).rjust(9) +"\n"
 
-        if len(chart_titles) == 4:
-            bark += f"{ barchart_cat_name_mapping.keys()[0][dot]} { barchart_cat_name_mapping[1][dot]} { barchart_cat_name_mapping[2][dot]} { barchart_cat_name_mapping[3][dot]}\n ".rjust(10)
+
+
+
 
     # creating the spend chart axis and title
     spend_chart = ""
@@ -202,7 +210,7 @@ def create_spend_chart(categories):
         spend_chart = spend_chart + f"{thingy.rjust(3)}{3 * len(categories) * ' '} \n "
 
     #putting everything together in the final return statement
-    return title + spend_chart + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
+    return title + spend_chart + bark.rjust(0) + f"   {(len(categories) + 4) * '-'}\n" +category_chart_names.rjust(9)
 
 
 food = Category("Food")
