@@ -137,17 +137,17 @@ def create_spend_chart(categories):
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names += (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(10)
+                category_chart_names += " " + (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(10)
             elif len(chart_titles) == 3:
-                category_chart_names += (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(10)
+                category_chart_names += " " + (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(10)
             elif len(chart_titles) == 2:
-                category_chart_names += f"{chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(10)
+                category_chart_names += " " + f"{chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(10)
             elif len(chart_titles) == 1:
-                category_chart_names += f"{chart_titles[0][i]}\n ".rjust(10)
+                category_chart_names += " " + f"{chart_titles[0][i]}\n ".rjust(10)
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
-    category_chart_names = (category_chart_names).rjust(9) +"\n"
+    category_chart_names = (category_chart_names).rjust(9) + "\n"
 
     #gathering the percentage data
     percentages = []
@@ -159,60 +159,54 @@ def create_spend_chart(categories):
     bars = []
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
-       bar = int(number_of_bars) * "0"
+       bar = int(number_of_bars) * "o"
        bars.append(bar)
-    mapping = zip(chart_titles, bars)
-    barchart_cat_name_mapping = dict(mapping)
-    print(barchart_cat_name_mapping)
 
     # formatting the bar to ensure that all the bars have the same length
     bar_dic = {}
     equal_length_bars = []
     for bar in bars:
         bar_dic[bar] = len(str(bar))
-        longest_bar = max(bar_dic.values())
     for key, value in bar_dic.items():
-        if value == longest_bar:
+        if value == 10:
             bar_ = key
             equal_length_bars.append(bar_)
         else:
-            value = longest_bar - value
+            value = 10 - value
             extra_spacing = str(value * ' ')
             bar_ = extra_spacing + key
             equal_length_bars.append(bar_)
-    print(equal_length_bars)
-
 
     #first steps top the creation of the bars
     bark = ""
     for dot in equal_length_bars:
         for i in range(len(dot)):
-            if len(equal_length_bars) == 4:
-                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
-            elif len(equal_length_bars) == 3:
-                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} \n ").rjust(10)
-            elif len(equal_length_bars) == 2:
-                bark += (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} \n ").rjust(10)
-            elif len(equal_length_bars) == 1:
-                bark += (f"{equal_length_bars[0][i]}\n ").rjust(10)
+            for l in reversed(range(0, 110, 10)):
+                if len(equal_length_bars) == 4:
+                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
+                elif len(equal_length_bars) == 3:
+                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
+                elif len(equal_length_bars) == 2:
+                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
+                elif len(equal_length_bars) == 1:
+                    bark += " " + (f"{l}|{equal_length_bars[0][i]}\n ").rjust(10)
+            break
         break
-    bark = (bark).rjust(10) +"\n"
 
-
-
-
+    bark = (bark).rjust(9)
+    
 
     # creating the spend chart axis and title
-    spend_chart = ""
+
     title = " Percentage spent by category\n"
     for i in reversed(range(0, 110, 10)):
-        thingy = f"{i}| "
-        spend_chart = spend_chart + f"{thingy.rjust(3)}{3 * len(categories) * ' '} \n  "
+        thingy = f"{i}|"
+        "{thingy.rjust(3)} \n  "
 
     #putting everything together in the final return statement
-    return title + spend_chart + bark.rjust(10) + f"   {(len(categories) + 4) * '-'}\n" +category_chart_names.rjust(9)
+    return title + bark.rjust(9) + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
 
-
+#CREATING OUTPUT
 food = Category("Food")
 food.deposit(1000, "initial deposit")
 food.withdraw(10.15, "groceries")
