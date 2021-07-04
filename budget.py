@@ -178,7 +178,7 @@ def create_spend_chart(categories):
         else:
             value = longest_bar - value
             extra_spacing = str(value * ' ')
-            bar_ = key + extra_spacing
+            bar_ = extra_spacing + key
             equal_length_bars.append(bar_)
     print(equal_length_bars)
 
@@ -196,7 +196,7 @@ def create_spend_chart(categories):
             elif len(equal_length_bars) == 1:
                 bark += (f"{equal_length_bars[0][i]}\n ").rjust(10)
         break
-    bark = (bark).rjust(9) +"\n"
+    bark = (bark).rjust(10) +"\n"
 
 
 
@@ -206,11 +206,11 @@ def create_spend_chart(categories):
     spend_chart = ""
     title = " Percentage spent by category\n"
     for i in reversed(range(0, 110, 10)):
-        thingy = f"{i}|"
-        spend_chart = spend_chart + f"{thingy.rjust(3)}{3 * len(categories) * ' '} \n "
+        thingy = f"{i}| "
+        spend_chart = spend_chart + f"{thingy.rjust(3)}{3 * len(categories) * ' '} \n  "
 
     #putting everything together in the final return statement
-    return title + spend_chart + bark.rjust(0) + f"   {(len(categories) + 4) * '-'}\n" +category_chart_names.rjust(9)
+    return title + spend_chart + bark.rjust(10) + f"   {(len(categories) + 4) * '-'}\n" +category_chart_names.rjust(9)
 
 
 food = Category("Food")
