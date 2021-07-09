@@ -154,13 +154,14 @@ def create_spend_chart(categories):
     for number in category_withdrawals:
         percentage = round((number / total_withdrawals) * 100)
         percentages.append(percentage)
-
+    print(percentages)
     #creating bars: matching each bar with its appropriate category
     bars = []
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
        bar = int(number_of_bars) * "o"
        bars.append(bar)
+    print(bars)
 
     # formatting the bar to ensure that all the bars have the same length
     bar_dic = {}
@@ -179,26 +180,42 @@ def create_spend_chart(categories):
 
     #first steps top the creation of the bars
     bark = " "
+    j = 100
     for dot in equal_length_bars:
-        for l in reversed(range(0, 110, 10)):
+        while j >= -10:
             for i in range(len(dot)):
-                    if len(equal_length_bars) == 4:
-                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
-                    elif len(equal_length_bars) == 3:
-                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
-                    elif len(equal_length_bars) == 2:
-                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
-                    elif len(equal_length_bars) == 1:
-                        bark += " " + (f"{l}|{equal_length_bars[0][i]}\n ").rjust(10)
-            break
+                if len(equal_length_bars) == 4:
+                    bark += " " + (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
+                elif len(equal_length_bars) == 3:
+                    bark += " " + (f"{j}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
+                    j -= 10
+                    if j == -10:
+                        break
+                elif len(equal_length_bars) == 2:
+                    bark += " " + (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
+                elif len(equal_length_bars) == 1:
+                    bark += " " + (f"{equal_length_bars[0][i]}\n ").rjust(10)
+
+            if j == -10:
+                break
         break
+
+    bark = bark.rjust(10)
+
 
 
     # creating the spend chart axis and title
     title = " Percentage spent by category\n"
 
     #putting everything together in the final return statement
-    return title + bark.rjust(9) + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
+    return title + bark.rjust(10) + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
+
+
+  #if l > 10:
+   #                         l -= 10
+    #                    elif l == 10:
+     #                       l = 0
+
 
 #CREATING OUTPUT
 food = Category("Food")
