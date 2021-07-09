@@ -137,13 +137,13 @@ def create_spend_chart(categories):
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names += " " + (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(10)
+                category_chart_names += " " + (f"    {chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(10)
             elif len(chart_titles) == 3:
-                category_chart_names += " " + (f"{chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(10)
+                category_chart_names += " " + (f"    {chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(10)
             elif len(chart_titles) == 2:
-                category_chart_names += " " + f"{chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(10)
+                category_chart_names += " " + f"    {chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(10)
             elif len(chart_titles) == 1:
-                category_chart_names += " " + f"{chart_titles[0][i]}\n ".rjust(10)
+                category_chart_names += " " + f"    {chart_titles[0][i]}\n ".rjust(10)
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
@@ -185,22 +185,40 @@ def create_spend_chart(categories):
         while j >= -10:
             for i in range(len(dot)):
                 if len(equal_length_bars) == 4:
-                    bark += " " + (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
-                elif len(equal_length_bars) == 3:
-                    bark += " " + (f"{j}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
                     j -= 10
+                    if j == 0:
+                        bark += ("0| o o o o").rjust(10)
+                    if j == -10:
+                        break
+                elif len(equal_length_bars) == 3:
+
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(9)
+                    j -= 10
+                    if j == 0:
+                        bark += ("0| o o o").rjust(10)
                     if j == -10:
                         break
                 elif len(equal_length_bars) == 2:
-                    bark += " " + (f"{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
+                    j -= 10
+                    if j == 0:
+                        bark += ("0| o o ").rjust(10)
+                    if j == -10:
+                        break
                 elif len(equal_length_bars) == 1:
-                    bark += " " + (f"{equal_length_bars[0][i]}\n ").rjust(10)
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]}\n ").rjust(10)
+                    j -= 10
+                    if j == 0:
+                        bark += ("0| o").rjust(10)
+                    if j == -10:
+                        break
 
             if j == -10:
                 break
         break
 
-    bark = bark.rjust(10)
+    bark = bark.rjust(19)
 
 
 
@@ -208,13 +226,10 @@ def create_spend_chart(categories):
     title = " Percentage spent by category\n"
 
     #putting everything together in the final return statement
-    return title + bark.rjust(10) + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
+    return title + bark.ljust(1) + f"    {3*(len(categories) ) * '-'}\n" + category_chart_names.rjust(9)
 
 
-  #if l > 10:
-   #                         l -= 10
-    #                    elif l == 10:
-     #                       l = 0
+
 
 
 #CREATING OUTPUT
