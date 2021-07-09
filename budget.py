@@ -178,30 +178,24 @@ def create_spend_chart(categories):
             equal_length_bars.append(bar_)
 
     #first steps top the creation of the bars
-    bark = ""
+    bark = " "
     for dot in equal_length_bars:
-        for i in range(len(dot)):
-            for l in reversed(range(0, 110, 10)):
-                if len(equal_length_bars) == 4:
-                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
-                elif len(equal_length_bars) == 3:
-                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
-                elif len(equal_length_bars) == 2:
-                    bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
-                elif len(equal_length_bars) == 1:
-                    bark += " " + (f"{l}|{equal_length_bars[0][i]}\n ").rjust(10)
+        for l in reversed(range(0, 110, 10)):
+            for i in range(len(dot)):
+                    if len(equal_length_bars) == 4:
+                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
+                    elif len(equal_length_bars) == 3:
+                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(10)
+                    elif len(equal_length_bars) == 2:
+                        bark += " " + (f"{l}|{equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
+                    elif len(equal_length_bars) == 1:
+                        bark += " " + (f"{l}|{equal_length_bars[0][i]}\n ").rjust(10)
             break
         break
 
-    bark = (bark).rjust(9)
-    
 
     # creating the spend chart axis and title
-
     title = " Percentage spent by category\n"
-    for i in reversed(range(0, 110, 10)):
-        thingy = f"{i}|"
-        "{thingy.rjust(3)} \n  "
 
     #putting everything together in the final return statement
     return title + bark.rjust(9) + f"   {(len(categories) + 4) * '-'}\n" + category_chart_names.rjust(9)
