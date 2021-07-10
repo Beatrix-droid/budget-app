@@ -65,10 +65,8 @@ class Category:
         Category.item = item2
         self.transfer_amt = transfer_amt
         if transfer_amt < self.deposit_amt:
-            self.ledger.append({"description": f"Transfer to {item2.item}", "amount": \
-            (-1) * self.transfer_amt})
-            item2.ledger.append({"description": f"Transfer from {self.item}", "amount": \
-          self.transfer_amt})
+            self.ledger.append({"description": f"Transfer to {item2.item}", "amount": (-1) * self.transfer_amt})
+            item2.ledger.append({"description": f"Transfer from {self.item}", "amount": self.transfer_amt})
             self.balance = self.deposit_amt - self.transfer_amt
             item2.deposit_amt = self.transfer_amt
             item2.balance = item2.deposit_amt + self.transfer_amt
@@ -78,7 +76,7 @@ class Category:
     def __str__(self):
         """ prints out the ledger list in a neat formatted way, so that it is easier
         to understand for the end user"""
-        stars = (self.item.center(30, "*"))
+        stars = (self.item.center(30, "*"))+"\n"
         ledger_items = ""
         for dictionary in self.ledger:
             for key in dictionary.keys():
@@ -87,9 +85,9 @@ class Category:
                 words = dictionary["description"]
                 cut_words = (words[0:23])
 
-            ledger_items = ledger_items + f"{cut_words} {format(numbers, '.2f').rjust(len(stars) - len(cut_words) -1, ' ')}  \n"
-        total = f"Total: {format(self.get_balance(), '.2f')}"
-        return stars + "\n" + str(ledger_items[:]) + total
+            ledger_items = ledger_items + f"{cut_words}{format(numbers,'.2f').rjust(len(stars) - len(cut_words) -1, ' ')}\n"
+        total = f"Total: {format(self.get_balance(),'.2f')}"
+        return stars + str(ledger_items[:])+ total
 
     def total_category_withdrawals(self):
         category_withdrawals = 0
