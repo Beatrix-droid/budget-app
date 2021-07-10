@@ -1,3 +1,4 @@
+
 """This is a budget app. It instantiates objects based on different budget
 categories like food, clothng and entertainment. When objects are created,
 they are passed in the name of the category. There is also an instance
@@ -137,11 +138,11 @@ def create_spend_chart(categories):
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names += " " + (f"    {chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]} {chart_titles[3][i]}\n ").rjust(12)
+                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  {chart_titles[3][i]}\n ").rjust(12)
             elif len(chart_titles) == 3:
-                category_chart_names += " " + (f"    {chart_titles[0][i]} {chart_titles[1][i]} {chart_titles[2][i]}\n ").rjust(12)
+                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}\n ").rjust(12)
             elif len(chart_titles) == 2:
-                category_chart_names += " " + f"    {chart_titles[0][i]} {chart_titles[1][i]}\n ".rjust(12)
+                category_chart_names += " " + f"    {chart_titles[0][i]}  {chart_titles[1][i]}\n ".rjust(12)
             elif len(chart_titles) == 1:
                 category_chart_names += " " + f"    {chart_titles[0][i]}\n ".rjust(12)
             else:
@@ -186,16 +187,16 @@ def create_spend_chart(categories):
             for i in range(len(dot)):
                 if len(equal_length_bars) == 4:
                     j -= 10
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(12)
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}\n ").rjust(12)
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 3:
                     j -= 10
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(12)
+                    bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}\n ").rjust(14)
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 2:
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(12)
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}\n").rjust(12)
                     j -= 10
                     if j == 10:
                         break
@@ -208,14 +209,11 @@ def create_spend_chart(categories):
                 break
         break
 
-    bark = bark.rjust(19)
-
-    bark = bark + f"   0|{len(equal_length_bars)* ' o'} \n"
+    bark = bark + f"  0| {len(equal_length_bars)* 'o  '} \n"
 
 
 
     title = " Percentage spent by category\n"
 
     #putting everything together in the final return statement
-    return title + bark.ljust(1) + f"      {2*(len(categories) + 1) * '-'}\n" + category_chart_names.rjust(9)
-
+    return title + bark + f"     {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
