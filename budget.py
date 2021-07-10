@@ -1,3 +1,4 @@
+
 """This is a budget app. It instantiates objects based on different budget
 categories like food, clothng and entertainment. When objects are created,
 they are passed in the name of the category. There is also an instance
@@ -154,14 +155,14 @@ def create_spend_chart(categories):
     for number in category_withdrawals:
         percentage = round((number / total_withdrawals) * 100)
         percentages.append(percentage)
-    print(percentages)
+    #print(percentages)
     #creating bars: matching each bar with its appropriate category
     bars = []
     for percentage in percentages:
        number_of_bars = round((percentage / 10), 0)
        bar = int(number_of_bars) * "o"
        bars.append(bar)
-    print(bars)
+    #print(bars)
 
     # formatting the bar to ensure that all the bars have the same length
     bar_dic = {}
@@ -180,72 +181,43 @@ def create_spend_chart(categories):
 
     #first steps top the creation of the bars
     bark = " "
-    j = 100
+    j = 110
     for dot in equal_length_bars:
         while j >= -10:
             for i in range(len(dot)):
                 if len(equal_length_bars) == 4:
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
                     j -= 10
-                    if j == 0:
-                        bark += ("0| o o o o").rjust(10)
-                    if j == -10:
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]} {equal_length_bars[3][i]}\n ").rjust(10)
+                    if j == 10:
                         break
                 elif len(equal_length_bars) == 3:
-
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(9)
                     j -= 10
-                    if j == 0:
-                        bark += ("0| o o o").rjust(10)
-                    if j == -10:
+                    bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]} {equal_length_bars[2][i]}\n ").rjust(9)
+                    if j == 10:
                         break
                 elif len(equal_length_bars) == 2:
                     bark += " " + (f"{j}| {equal_length_bars[0][i]} {equal_length_bars[1][i]}\n").rjust(10)
                     j -= 10
-                    if j == 0:
-                        bark += ("0| o o ").rjust(10)
-                    if j == -10:
+                    if j == 10:
                         break
                 elif len(equal_length_bars) == 1:
                     bark += " " + (f"{j}| {equal_length_bars[0][i]}\n ").rjust(10)
                     j -= 10
-                    if j == 0:
-                        bark += ("0| o").rjust(10)
-                    if j == -10:
+                    if j == 10:
                         break
-
-            if j == -10:
+            if j == 10:
                 break
         break
 
     bark = bark.rjust(19)
 
+    bark = bark + f"  0|{len(equal_length_bars)* ' o'} \n"
 
 
+ #if j == 0:
+  #                      bark += ("0| o o o o").rjust(10)
     # creating the spend chart axis and title
     title = " Percentage spent by category\n"
 
     #putting everything together in the final return statement
     return title + bark.ljust(1) + f"    {3*(len(categories) ) * '-'}\n" + category_chart_names.rjust(9)
-
-
-
-
-
-#CREATING OUTPUT
-food = Category("Food")
-food.deposit(1000, "initial deposit")
-food.withdraw(10.15, "groceries")
-food.withdraw(15.89, "restaurant and more food for dessert")
-print(food.get_balance())
-clothing = Category("Clothing")
-food.transfer(50, clothing)
-clothing.withdraw(25.55)
-clothing.withdraw(100)
-auto = Category("Auto")
-auto.deposit(1000, "initial deposit")
-auto.withdraw(15)
-
-print(food)
-print(clothing)
-print(create_spend_chart([food, clothing, auto]))
