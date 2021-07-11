@@ -1,4 +1,3 @@
-
 """This is a budget app. It instantiates objects based on different budget
 categories like food, clothng and entertainment. When objects are created,
 they are passed in the name of the category. There is also an instance
@@ -65,10 +64,8 @@ class Category:
         Category.item = item2
         self.transfer_amt = transfer_amt
         if transfer_amt < self.deposit_amt:
-            self.ledger.append({"description": f"Transfer to {item2.item}", "amount": \
-            (-1) * self.transfer_amt})
-            item2.ledger.append({"description": f"Transfer from {self.item}", "amount": \
-          self.transfer_amt})
+            self.ledger.append({"description": f"Transfer to {item2.item}", "amount": (-1) * self.transfer_amt})
+            item2.ledger.append({"description": f"Transfer from {self.item}", "amount": self.transfer_amt})
             self.balance = self.deposit_amt - self.transfer_amt
             item2.deposit_amt = self.transfer_amt
             item2.balance = item2.deposit_amt + self.transfer_amt
@@ -78,7 +75,7 @@ class Category:
     def __str__(self):
         """ prints out the ledger list in a neat formatted way, so that it is easier
         to understand for the end user"""
-        stars = (self.item.center(30, "*"))
+        stars = (self.item.center(30, "*"))+"\n"
         ledger_items = ""
         for dictionary in self.ledger:
             for key in dictionary.keys():
@@ -87,9 +84,9 @@ class Category:
                 words = dictionary["description"]
                 cut_words = (words[0:23])
 
-            ledger_items = ledger_items + f"{cut_words} {format(numbers, '.2f').rjust(len(stars) - len(cut_words) -1, ' ')}  \n"
-        total = f"Total: {format(self.get_balance(), '.2f')}"
-        return stars + "\n" + str(ledger_items[:]) + total
+            ledger_items = ledger_items + f"{cut_words}{format(numbers,'.2f').rjust(len(stars) - len(cut_words) -1, ' ')}\n"
+        total = f"Total: {format(self.get_balance(),'.2f')}"
+        return stars + str(ledger_items[:])+ total
 
     def total_category_withdrawals(self):
         category_withdrawals = 0
@@ -134,17 +131,17 @@ def create_spend_chart(categories):
             chart_titles.append(cat_title)
 
     #implementing the correct formatting for the category titles
-    category_chart_names = " "
+    category_chart_names = "  "
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  {chart_titles[3][i]}\n ").rjust(12)
+                category_chart_names +=" " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  {chart_titles[3][i]}\n  ").rjust(12)
             elif len(chart_titles) == 3:
-                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}\n ").rjust(12)
+                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}\n  ").rjust(12)
             elif len(chart_titles) == 2:
-                category_chart_names += " " + f"    {chart_titles[0][i]}  {chart_titles[1][i]}\n ".rjust(12)
+                category_chart_names += " " + f"    {chart_titles[0][i]}  {chart_titles[1][i]}\n  ".rjust(12)
             elif len(chart_titles) == 1:
-                category_chart_names += " " + f"    {chart_titles[0][i]}\n ".rjust(12)
+                category_chart_names +=  " " +f"    {chart_titles[0][i]}\n  ".rjust(12)
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
@@ -183,25 +180,25 @@ def create_spend_chart(categories):
     bark = " "
     j = 110
     for dot in equal_length_bars:
-        while j >= -10:
+        while j > -10:
             for i in range(len(dot)):
                 if len(equal_length_bars) == 4:
                     j -= 10
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}\n ").rjust(12)
+                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}\n  ").rjust(12)
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 3:
                     j -= 10
-                    bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}\n ").rjust(14)
+                    bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}\n  ").rjust(14)
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 2:
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}\n").rjust(12)
+                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}\n  ").rjust(12)
                     j -= 10
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 1:
-                    bark += " " + (f"{j}| {equal_length_bars[0][i]}\n ").rjust(10)
+                    bark +=  (f"{j}| {equal_length_bars[0][i]}\n  ").rjust(10)
                     j -= 10
                     if j == 10:
                         break
@@ -209,11 +206,11 @@ def create_spend_chart(categories):
                 break
         break
 
-    bark = bark + f"  0| {len(equal_length_bars)* 'o  '} \n"
+    bark = bark + f" 0| {len(equal_length_bars)* 'o  '}\n  "
 
 
 
     title = " Percentage spent by category\n"
 
     #putting everything together in the final return statement
-    return title + bark + f"     {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
+    return title + bark + f"    {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
