@@ -177,7 +177,7 @@ def create_spend_chart(categories):
             equal_length_bars.append(bar_)
 
     #first steps top the creation of the bars
-    bark = " "
+    bark = "\n"
     j = 110
     for dot in equal_length_bars:
         while j > -10:
@@ -210,7 +210,7 @@ def create_spend_chart(categories):
 
 
 
-    title = " Percentage spent by category\n"
+    title = "Percentage spent by category"
 
     #putting everything together in the final return statement
     return title + bark + f"    {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
