@@ -140,13 +140,17 @@ def create_spend_chart(categories):
                 
                 if i != len(word):
                   category_chart_names = category_chart_names +"\n"
+                
+                if i == len(word):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+
 
 
             elif len(chart_titles) == 3: 
                 if i != len(word):
                    category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  "+ "\n").rjust(12)
                 if i == len(word):
-                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
 
 
 
@@ -156,15 +160,23 @@ def create_spend_chart(categories):
                 if i != len(word):
                   category_chart_names = category_chart_names +"\n"
 
+                if i == len(word):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+
+
             elif len(chart_titles) == 1:
                 category_chart_names +=  "  " + f"    {chart_titles[0][i]}  ".rjust(12)
                 
                 if i != len(word):
                   category_chart_names = category_chart_names +"\n"
+
+                elif i == len(word):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
-    category_chart_names = (category_chart_names +" ").rjust(12)
+    category_chart_names = (category_chart_names).rjust(12)
 
     #gathering the percentage data
     percentages = []
