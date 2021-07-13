@@ -3,6 +3,7 @@ categories like food, clothng and entertainment. When objects are created,
 they are passed in the name of the category. There is also an instance
 variable that is a list"""
 
+import math
 
 class Category:
 
@@ -141,11 +142,13 @@ def create_spend_chart(categories):
                   category_chart_names = category_chart_names +"\n"
 
 
-            elif len(chart_titles) == 3:
-                category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
-                
+            elif len(chart_titles) == 3: 
                 if i != len(word):
-                  category_chart_names = category_chart_names +"\n"
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  "+ "\n").rjust(12)
+                if i == len(word):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+
+
 
             elif len(chart_titles) == 2:
                 category_chart_names += "  " +  f"  {chart_titles[0][i]}  {chart_titles[1][i]}  ".rjust(12)
@@ -172,7 +175,7 @@ def create_spend_chart(categories):
     #creating bars: matching each bar with its appropriate category
     bars = []
     for percentage in percentages:
-       number_of_bars = round((percentage / 10), 0)
+       number_of_bars = math.floor(percentage / 10)
        bar = int(number_of_bars) * "o"
        bars.append(bar)
     #print(bars)
@@ -201,37 +204,31 @@ def create_spend_chart(categories):
                 if len(equal_length_bars) == 4:
                     j -= 10
                     bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}  \n ").rjust(12)
-                    if j != 100:
-                      bark =  "    " + bark
-                    
                     if j == 10:
                         break
+                
                 elif len(equal_length_bars) == 3:
                     j -= 10
                     bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  \n ").rjust(12)
-                    if j != 100:
-                      bark =  "    " + bark
                     if j == 10:
                         break
+                
                 elif len(equal_length_bars) == 2:
                     bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  \n  ").rjust(12)
                     j -= 10
-                    if j != 100:
-                      bark =  "    " + bark
                     if j == 10:
                         break
+                
                 elif len(equal_length_bars) == 1:
                     bark +=  (f"{j}| {equal_length_bars[0][i]}  \n ").rjust(12)
                     j -= 10
-                    if j != 100:
-                      bark =  "    " + bark
                     if j == 10:
                         break
             if j == 10:
                 break
         break
 
-    bark = bark + f" 0| {len(equal_length_bars)* 'o  '}   \n "
+    bark = bark + f" 0| {len(equal_length_bars)* 'o  '}\n "
 
 
 
