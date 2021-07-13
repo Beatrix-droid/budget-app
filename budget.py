@@ -135,15 +135,29 @@ def create_spend_chart(categories):
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names +=  " " +  (f"   {chart_titles[0][i]}  {chart_titles[1][i]}       {chart_titles[2][i]}  {chart_titles[3][i]}\n ").rjust(12)
+                category_chart_names +=  "  " +  (f"   {chart_titles[0][i]}  {chart_titles[1][i]}       {chart_titles[2][i]}  {chart_titles[3][i]}  ").rjust(12)
+                
+                if i != len(word):
+                  category_chart_names = category_chart_names +"\n"
+
+
             elif len(chart_titles) == 3:
-                category_chart_names +=  " " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}   \n ").rjust(12)
-                if i == 0:
-                  category_chart_names = " " + category_chart_names
+                category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
+                
+                if i != len(word):
+                  category_chart_names = category_chart_names +"\n"
+
             elif len(chart_titles) == 2:
-                category_chart_names += " " +  f"  {chart_titles[0][i]}  {chart_titles[1][i]}\n ".rjust(12)
+                category_chart_names += "  " +  f"  {chart_titles[0][i]}  {chart_titles[1][i]}  ".rjust(12)
+               
+                if i != len(word):
+                  category_chart_names = category_chart_names +"\n"
+
             elif len(chart_titles) == 1:
-                category_chart_names +=  " " + f"    {chart_titles[0][i]}\n ".rjust(12)
+                category_chart_names +=  "  " + f"    {chart_titles[0][i]}  ".rjust(12)
+                
+                if i != len(word):
+                  category_chart_names = category_chart_names +"\n"
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
