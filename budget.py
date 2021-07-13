@@ -131,21 +131,23 @@ def create_spend_chart(categories):
             chart_titles.append(cat_title)
 
     #implementing the correct formatting for the category titles
-    category_chart_names = "  "
+    category_chart_names = ""
     for word in chart_titles:
         for i in range(len(word)):
             if len(chart_titles) == 4:
-                category_chart_names +=" " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  {chart_titles[3][i]}\n  ").rjust(12)
+                category_chart_names +=  " " +  (f"   {chart_titles[0][i]}  {chart_titles[1][i]}       {chart_titles[2][i]}  {chart_titles[3][i]}\n ").rjust(12)
             elif len(chart_titles) == 3:
-                category_chart_names += " " + (f"    {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}\n  ").rjust(12)
+                category_chart_names +=  " " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}   \n ").rjust(12)
+                if i == 0:
+                  category_chart_names = " " + category_chart_names
             elif len(chart_titles) == 2:
-                category_chart_names += " " + f"    {chart_titles[0][i]}  {chart_titles[1][i]}\n  ".rjust(12)
+                category_chart_names += " " +  f"  {chart_titles[0][i]}  {chart_titles[1][i]}\n ".rjust(12)
             elif len(chart_titles) == 1:
-                category_chart_names +=  " " +f"    {chart_titles[0][i]}\n  ".rjust(12)
+                category_chart_names +=  " " + f"    {chart_titles[0][i]}\n ".rjust(12)
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
         break
-    category_chart_names = (category_chart_names).rjust(9) + "\n"
+    category_chart_names = (category_chart_names +" ").rjust(12)
 
     #gathering the percentage data
     percentages = []
@@ -184,33 +186,42 @@ def create_spend_chart(categories):
             for i in range(len(dot)):
                 if len(equal_length_bars) == 4:
                     j -= 10
-                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}\n  ").rjust(12)
+                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  {equal_length_bars[3][i]}  \n ").rjust(12)
+                    if j != 100:
+                      bark =  "    " + bark
+                    
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 3:
                     j -= 10
-                    bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}\n  ").rjust(14)
+                    bark += (f"{j}|"+ f" {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  {equal_length_bars[2][i]}  \n ").rjust(12)
+                    if j != 100:
+                      bark =  "    " + bark
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 2:
-                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}\n  ").rjust(12)
+                    bark += (f"{j}| {equal_length_bars[0][i]}  {equal_length_bars[1][i]}  \n  ").rjust(12)
                     j -= 10
+                    if j != 100:
+                      bark =  "    " + bark
                     if j == 10:
                         break
                 elif len(equal_length_bars) == 1:
-                    bark +=  (f"{j}| {equal_length_bars[0][i]}\n  ").rjust(10)
+                    bark +=  (f"{j}| {equal_length_bars[0][i]}  \n ").rjust(12)
                     j -= 10
+                    if j != 100:
+                      bark =  "    " + bark
                     if j == 10:
                         break
             if j == 10:
                 break
         break
 
-    bark = bark + f" 0| {len(equal_length_bars)* 'o  '}\n  "
+    bark = bark + f" 0| {len(equal_length_bars)* 'o  '}   \n "
 
 
 
     title = "Percentage spent by category"
 
     #putting everything together in the final return statement
-    return title + bark + f"    {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
+    return title + bark + f"   {2*(len(categories) + 2) * '-'}\n" + category_chart_names.rjust(9)
