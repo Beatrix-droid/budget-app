@@ -1,3 +1,4 @@
+ 
 """This is a budget app. It instantiates objects based on different budget
 categories like food, clothng and entertainment. When objects are created,
 they are passed in the name of the category. There is also an instance
@@ -138,18 +139,18 @@ def create_spend_chart(categories):
             if len(chart_titles) == 4:
                 category_chart_names +=  "  " +  (f"   {chart_titles[0][i]}  {chart_titles[1][i]}       {chart_titles[2][i]}  {chart_titles[3][i]}  ").rjust(12)
                 
-                if i != len(word):
-                  category_chart_names = category_chart_names +"\n"
-                
-                if i == len(word):
-                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+                if i != (len(word)-1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  \n").rjust(12)
+                if i == (len(word) -1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
+
 
 
 
             elif len(chart_titles) == 3: 
-                if i != len(word):
-                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  "+ "\n").rjust(12)
-                if i == len(word):
+                if i != (len(word)-1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  \n").rjust(12)
+                if i == (len(word) -1):
                    category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
 
 
@@ -157,21 +158,19 @@ def create_spend_chart(categories):
             elif len(chart_titles) == 2:
                 category_chart_names += "  " +  f"  {chart_titles[0][i]}  {chart_titles[1][i]}  ".rjust(12)
                
-                if i != len(word):
-                  category_chart_names = category_chart_names +"\n"
-
-                if i == len(word):
-                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+                if i != (len(word)-1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  \n").rjust(12)
+                if i == (len(word) -1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
 
 
             elif len(chart_titles) == 1:
                 category_chart_names +=  "  " + f"    {chart_titles[0][i]}  ".rjust(12)
                 
-                if i != len(word):
-                  category_chart_names = category_chart_names +"\n"
-
-                elif i == len(word):
-                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}").rjust(12)
+                if i != (len(word)-1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  \n").rjust(12)
+                if i == (len(word) -1):
+                   category_chart_names +=  "  " + (f"   {chart_titles[0][i]}  {chart_titles[1][i]}  {chart_titles[2][i]}  ").rjust(12)
 
             else:
                 return "Sorry you cannot display data for more than four categories at a time"
